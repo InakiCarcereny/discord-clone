@@ -6,6 +6,7 @@ import {
   updateServer,
   deleteServer,
 } from "../controllers/server.controllers.js";
+import upload from "../middleware/upload.middleware.js";
 
 const routes = Router();
 
@@ -13,7 +14,7 @@ routes.get("/:id", getServer);
 
 routes.get("/", getServers);
 
-routes.post("/", createServer);
+routes.post("/", upload.single("logo"), createServer);
 
 routes.put("/:id", updateServer);
 
