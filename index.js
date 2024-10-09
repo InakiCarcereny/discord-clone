@@ -3,6 +3,10 @@ import { PORT } from "./config.js";
 import { connectDB } from "./db.js";
 import userRoutes from "./routes/auth.routes.js";
 import serverRoutes from "./routes/server.routes.js";
+import channelRoutes from "./routes/channel.routes.js";
+import eventRoutes from "./routes/event.routes.js";
+import infoRoutes from "./routes/userInfo.routes.js";
+
 import cookieParser from "cookie-parser";
 
 connectDB();
@@ -14,6 +18,9 @@ app.use(cookieParser());
 
 app.use("/auth", userRoutes);
 app.use("/server", serverRoutes);
+app.use("/channel", channelRoutes);
+app.use("/event", eventRoutes);
+app.use("/info", infoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
