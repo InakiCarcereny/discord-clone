@@ -7,12 +7,16 @@ const userInfoSchema = new mongoose.Schema(
       requiered: false,
     },
     avatar: {
-      data: Buffer,
-      contentType: String,
+      // data: Buffer,
+      // contentType: String,
+      type: String,
+      requiered: false,
     },
     banner: {
-      data: Buffer,
-      contentType: String,
+      // data: Buffer,
+      // contentType: String,
+      type: String,
+      requiered: false,
     },
     description: {
       type: String,
