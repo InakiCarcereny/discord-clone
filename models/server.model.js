@@ -11,10 +11,8 @@ const serverSchema = new mongoose.Schema(
       required: false,
     },
     logo: {
-      // data: Buffer,
-      // contentType: String,
-      type: String,
-      required: false,
+      data: Buffer,
+      contentType: String,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
