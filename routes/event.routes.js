@@ -7,15 +7,18 @@ import {
   deleteEvent,
 } from "../controllers/event.controllers.js";
 
+import { EventSchema } from "../schemas/event.schema.js";
+import { isValidate } from "../middleware/user.middleware.js";
+
 const routes = Router();
 
 routes.get("/:id", getEvent);
 
 routes.get("/", getEvents);
 
-routes.post("/", createEvent);
+routes.post("/", isValidate(EventSchema), createEvent);
 
-routes.put("/:id", updateEvent);
+routes.put("/:id", isValidate(EventSchema), updateEvent);
 
 routes.delete("/:id", deleteEvent);
 

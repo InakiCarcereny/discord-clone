@@ -35,10 +35,8 @@ const eventSchema = new mongoose.Schema(
       required: true,
     },
     logo: {
-      // data: Buffer,
-      // contentType: String,
-      type: String,
-      required: false,
+      data: Buffer,
+      contentType: String,
     },
     server: {
       type: mongoose.Schema.Types.ObjectId,
