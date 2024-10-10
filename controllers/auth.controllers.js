@@ -1,4 +1,5 @@
 import User from "../models/auth.model.js";
+import UserInfo from "../models/userInfo.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { SALT, JWT_SECRET } from "../config.js";
@@ -22,6 +23,12 @@ export const register = async (req, res) => {
     });
 
     const savedUser = await newUser.save();
+
+    const newUserInfo = new UserInfo({
+      user: savedUser._id,
+    });
+
+    await newUserInfo.save();
 
     res.status(201).json(savedUser);
   } catch (err) {
