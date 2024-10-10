@@ -1,4 +1,5 @@
 import User from "../models/userInfo.model.js";
+import UserInfo from "../models/userInfo.model.js";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config.js";
 
@@ -14,35 +15,35 @@ export const updateInfo = async (req, res) => {
 
     const { id } = data;
 
-    const userFind = await User.findById(id);
+    const userInfo = await UserInfo.findOne({ user: id });
 
-    if (!userFind) {
+    if (!userInfo) {
       return res.status(400).json(["User not found"]);
     }
 
     const { nickname, avatar, banner, description, state } = req.body;
 
     if (nickname) {
-      userFind.nickname = nickname;
+      userInfo.nickname = nickname;
     }
 
     if (avatar) {
-      userFind.avatar = avatar;
+      userInfo.avatar = avatar;
     }
 
     if (banner) {
-      userFind.banner = banner;
+      userInfo.banner = banner;
     }
 
     if (description) {
-      userFind.description = description;
+      userInfo.description = description;
     }
 
     if (state) {
-      userFind.state = state;
+      userInfo.state = state;
     }
 
-    await userFind.save();
+    await userInfo.save();
 
     res.staus(200).json(["Profile updated successfully"]);
   } catch (err) {
