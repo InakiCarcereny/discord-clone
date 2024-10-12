@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { SALT, JWT_SECRET } from "../config.js";
 
 export const register = async (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, password, email, name, day, month, year } = req.body;
 
   try {
     const userFind = await User.findOne({ username });
@@ -20,6 +20,10 @@ export const register = async (req, res) => {
       username,
       password: hashedPassword,
       email,
+      name,
+      day,
+      month,
+      year,
     });
 
     const savedUser = await newUser.save();

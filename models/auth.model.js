@@ -16,6 +16,22 @@ const userSchema = new mongoose.Schema(
       requiered: true,
       unique: true,
     },
+    name: {
+      type: String,
+      requiered: true,
+    },
+    day: {
+      type: String,
+      requiered: true,
+    },
+    month: {
+      type: String,
+      requiered: true,
+    },
+    year: {
+      type: String,
+      requiered: true,
+    },
   },
   {
     timestamps: true,
