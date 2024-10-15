@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 
 import { AuthProvider } from "./(routes)/register/context/auth.context";
+import { PrimeReactProvider } from "primereact/api";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${poppins.className} antialiased`}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <PrimeReactProvider>{children}</PrimeReactProvider>
+        </AuthProvider>
       </body>
     </html>
   );
