@@ -6,10 +6,6 @@ const serverSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: false,
-    },
     logo: {
       data: Buffer,
       contentType: String,

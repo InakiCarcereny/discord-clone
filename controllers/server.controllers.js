@@ -65,54 +65,42 @@ export const createServer = async (req, res) => {
       return res.status(400).json(["User not found"]);
     }
 
-    // if (
-    //   !req.file ||
-    //   !["image/png", "image/jpeg", "image/jpg"].includes(req.file.mimetype)
-    // ) {
-    //   return res.status(400).json(["Invalid file type"]);
-    // }
+    if (
+      !req.file ||
+      !["image/png", "image/jpeg", "image/jpg"].includes(req.file.mimetype)
+    ) {
+      return res.status(400).json(["Invalid file type"]);
+    }
 
-    const { tittle, description, logo } = req.body;
+    const { tittle } = req.body;
 
     const server = new Server({
       tittle,
-      description,
-      logo,
+      logo: {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      },
       user: userFind._id,
     });
 
     const savedServer = await server.save();
 
-    const newToken = jwt.sign(
-      {
-        userId: userFind._id,
-        serverId: savedServer._id,
-        username: userFind.username,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: "24h",
-      }
-    );
-
-    res.cookie("token", newToken);
-
     res.status(201).json(savedServer);
   } catch (err) {
-    res.status(500).json(["Error creating server", err]);
+    console.log(err);
+    res.status(500).json(["Error creating server"]);
   }
 };
 
 export const updateServer = async (req, res) => {
   try {
     const { id } = req.params;
-    const { tittle, description, logo } = req.body;
+    const { tittle, logo } = req.body;
 
     const updateServer = await Server.findByIdAndUpdate(
       id,
       {
         tittle,
-        description,
         logo,
       },
       {
