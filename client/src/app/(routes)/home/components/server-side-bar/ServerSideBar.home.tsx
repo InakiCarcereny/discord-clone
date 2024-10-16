@@ -2,6 +2,8 @@ import { Discord } from "@/app/icons/Discord";
 import { Plus } from "@/app/icons/Plus";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useServer } from "../../context/server.context";
+import { World } from "@/app/icons/World";
 
 interface ServerSideBarProps {
   open: boolean;
@@ -10,6 +12,14 @@ interface ServerSideBarProps {
 
 export function ServerSideBar({ open, handleOpen }: ServerSideBarProps) {
   const pathname = usePathname();
+
+  const { servers } = useServer();
+
+  const handleRightClick = (e: React.MouseEvent<HTMLLIElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("clik");
+  };
 
   return (
     <aside
@@ -27,6 +37,45 @@ export function ServerSideBar({ open, handleOpen }: ServerSideBarProps) {
       </Link>
 
       <div className="border border-zinc-600 rounded-full w-8 mt-2"></div>
+
+      <ul className="flex flex-col mt-2 gap-2">
+        {servers.map((server) => {
+          if (
+            server.logo &&
+            server.logo.data &&
+            Array.isArray(server.logo.data.data)
+          ) {
+            const logoUrl = `data:${
+              server.logo.contentType
+            };base64,${Buffer.from(server.logo.data.data).toString("base64")}`;
+
+            return (
+              <li
+                onContextMenu={handleRightClick}
+                className="flex flex-col group"
+                key={server._id}
+              >
+                <Link
+                  className="flex items-center"
+                  href={`/home/${server._id}`}
+                >
+                  <div className="border-2 border-white rounded-full h-2 group-hover:h-6 duration-200 absolute left-0"></div>
+                  <img
+                    src={logoUrl}
+                    alt={server.tittle}
+                    className="w-12 h-12 duration-200 rounded-3xl hover:rounded-[15px] "
+                  />
+                </Link>
+
+                <div className="absolute left-20 px-2 py-4 text-sm text-white bg-zinc-900 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold flex items-center gap-2">
+                  <World className="text-pink-600 h-4 w-4" />
+                  {server.tittle}
+                </div>
+              </li>
+            );
+          }
+        })}
+      </ul>
 
       <button
         onClick={handleOpen}

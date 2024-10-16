@@ -4,6 +4,8 @@ import { Separator } from "@/app/icons/Separator";
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Tray } from "@/app/icons/Tray";
+import { Message } from "@/app/icons/Message";
 
 const friends = [
   {
@@ -27,7 +29,7 @@ export function FriendsNav() {
   const pathname = usePathname();
 
   return (
-    <section className="flex flex-col py-[16px]">
+    <nav className="flex flex-col py-[16px]">
       <header className="flex items-center justify-between px-6">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-2">
@@ -59,6 +61,12 @@ export function FriendsNav() {
             Add friend
           </button>
         </div>
+
+        <div className="flex items-center gap-2">
+          <Message className="text-gray-400 h-7 w-7 hover:text-white" />
+          <Separator className="text-zinc-400" />
+          <Tray className="text-gray-400 h-7 w-7 hover:text-white" />
+        </div>
       </header>
 
       <div className="border-[0.1px] border-[#27282b] rounded-full w-full mt-3"></div>
@@ -71,6 +79,6 @@ export function FriendsNav() {
         />
         <Search className="text-white h-8 w-8" />
       </div>
-    </section>
+    </nav>
   );
 }

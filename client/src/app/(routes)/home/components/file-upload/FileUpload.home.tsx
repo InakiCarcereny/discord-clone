@@ -6,7 +6,11 @@ import { Button } from "primereact/button";
 import { Tooltip } from "primereact/tooltip";
 import { Upload } from "@/app/icons/Upload";
 
-export default function FileUploadComp() {
+interface FileUploadCompProps {
+  onFileSelect: (files: File[]) => void; // Recibe la función para pasar archivos
+}
+
+export default function FileUploadComp({ onFileSelect }: FileUploadCompProps) {
   const toast = useRef(null);
   const [totalSize, setTotalSize] = useState(0);
   const fileUploadRef = useRef(null);
@@ -20,6 +24,11 @@ export default function FileUploadComp() {
     });
 
     setTotalSize(_totalSize);
+
+    // Pasar los archivos seleccionados al componente padre
+    if (onFileSelect) {
+      onFileSelect(e.files); // Pasa los archivos seleccionados
+    }
   };
 
   const onTemplateUpload = (e) => {
@@ -46,37 +55,6 @@ export default function FileUploadComp() {
     setTotalSize(0);
   };
 
-  const headerTemplate = (options) => {
-    const { className, chooseButton, uploadButton, cancelButton } = options;
-    const value = totalSize / 10000;
-    const formatedValue =
-      fileUploadRef && fileUploadRef.current
-        ? fileUploadRef.current.formatSize(totalSize)
-        : "0 B";
-
-    return (
-      <div
-        className={className}
-        style={{
-          backgroundColor: "transparent",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        {chooseButton}
-        {uploadButton}
-        {cancelButton}
-        <div className="flex align-items-center gap-3 ml-auto">
-          <ProgressBar
-            value={value}
-            showValue={false}
-            style={{ width: "10rem", height: "12px" }}
-          ></ProgressBar>
-        </div>
-      </div>
-    );
-  };
-
   const itemTemplate = (file, props) => {
     return (
       <div className="flex align-items-center flex-wrap">
@@ -100,9 +78,9 @@ export default function FileUploadComp() {
 
   const emptyTemplate = () => {
     return (
-      <div className="flex align-items-center flex-column">
+      <div className="flex items-center flex-column">
         <i
-          className="pi pi-image mt-3 p-5"
+          className="pi pi-image mt-3"
           style={{
             fontSize: "5em",
             borderRadius: "50%",
@@ -110,11 +88,11 @@ export default function FileUploadComp() {
             color: "var(--surface-d)",
           }}
         ></i>
-        <span
-          style={{ fontSize: "1.2em", color: "var(--text-color-secondary)" }}
-          className="my-5"
-        >
+        <span className="my-4 flex flex-col items-center justify-center">
           <Upload className="text-[#5865f2] h-20 w-20" />
+          <p className="text-sm text-gray-400 font-semibold">
+            Drag and drop here
+          </p>
         </span>
       </div>
     );
@@ -157,7 +135,6 @@ export default function FileUploadComp() {
         onSelect={onTemplateSelect}
         onError={onTemplateClear}
         onClear={onTemplateClear}
-        headerTemplate={headerTemplate}
         itemTemplate={itemTemplate}
         emptyTemplate={emptyTemplate}
         chooseOptions={chooseOptions}
