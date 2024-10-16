@@ -54,7 +54,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true);
 
       const cookies = Cookies.get();
-      console.log(cookies);
 
       if (!cookies.token) {
         setIsAuthenticated(false);
