@@ -14,6 +14,7 @@ import { NavigateSideBar } from "./components/navigate-side-bar/NavigateSideBar.
 import { FriendsNav } from "./components/friends-nav/FriendsNav.home";
 import { User } from "./components/user/User.home";
 import { CreateServerModal } from "./components/create-server-modal/CreateServerModal.home";
+import { useServer } from "./context/server.context";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,6 +29,8 @@ export default function HomeLayout({
   const [open, setOpen] = useState(false);
 
   const { isAuthenticated, isLoading } = useAuth();
+
+  const { servers } = useServer();
 
   const router = useRouter();
 
@@ -52,6 +55,10 @@ export default function HomeLayout({
     setOpen(!open);
   };
 
+  const serverId = servers.map((server) => server._id);
+
+  const isMatchingServer = serverId.some((id) => pathname === `/home/${id}`);
+
   return (
     <div
       className={`${poppins.className} ${poppins.className} antialiased flex h-screen w-screen bg-[#1c1d1f]`}
@@ -62,23 +69,19 @@ export default function HomeLayout({
         <NavigateSideBar open={open} />
       </div>
 
-      <div
-        className={`flex flex-col w-full bg-[#323338] ${
-          open ? "blur-[2px]" : ""
-        }`}
-      >
+      <div className={`flex flex-col w-full bg-[#323338]`}>
         {showFriendsNav && <FriendsNav />}
 
         <main
-          className={`w-full h-full bg-[#323338] px-10 ${
-            open ? "blur-[2px]" : ""
+          className={`w-full h-full bg-[#323338] ${
+            isMatchingServer ? "px-0" : "px-10"
           }`}
         >
           {children}
         </main>
       </div>
 
-      <div className="absolute bottom-0 left-[70px] z-50 bg-[#232428] w-[240px] h-[50px] flex items-center justify-between px-1 border-t border-[#33353b]">
+      <div className="absolute bottom-0 left-[70px] bg-[#232428] w-[240px] h-[50px] flex items-center justify-between px-1 border-t border-[#33353b]">
         <User />
       </div>
 
