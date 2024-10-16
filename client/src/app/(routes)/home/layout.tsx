@@ -63,14 +63,14 @@ export default function HomeLayout({
       </div>
 
       <div
-        className={`flex flex-col w-full bg-[#33353b] ${
+        className={`flex flex-col w-full bg-[#323338] ${
           open ? "blur-[2px]" : ""
         }`}
       >
         {showFriendsNav && <FriendsNav />}
 
         <main
-          className={`w-full h-full bg-[#33353b] px-10 ${
+          className={`w-full h-full bg-[#323338] px-10 ${
             open ? "blur-[2px]" : ""
           }`}
         >
@@ -78,7 +78,7 @@ export default function HomeLayout({
         </main>
       </div>
 
-      <div className="absolute bottom-0 left-[70px] z-50 bg-[#1e2024] w-[240px] h-[50px] flex items-center justify-between px-1 border-t border-[#33353b]">
+      <div className="absolute bottom-0 left-[70px] z-50 bg-[#232428] w-[240px] h-[50px] flex items-center justify-between px-1 border-t border-[#33353b]">
         <User />
       </div>
 

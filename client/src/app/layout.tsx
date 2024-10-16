@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 
 import { AuthProvider } from "./(routes)/register/context/auth.context";
+import { ServerProvider } from "./(routes)/home/context/server.context";
 import { PrimeReactProvider } from "primereact/api";
 
 const poppins = Poppins({
@@ -24,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} ${poppins.className} antialiased`}>
         <AuthProvider>
-          <PrimeReactProvider>{children}</PrimeReactProvider>
+          <PrimeReactProvider>
+            <ServerProvider>{children}</ServerProvider>
+          </PrimeReactProvider>
         </AuthProvider>
       </body>
     </html>
