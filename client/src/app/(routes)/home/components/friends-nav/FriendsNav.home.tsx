@@ -28,6 +28,17 @@ const friends = [
 export function FriendsNav() {
   const pathname = usePathname();
 
+  const isServerRoute =
+    pathname.startsWith("/home/") &&
+    pathname !== "/home" &&
+    pathname !== "/home/store" &&
+    !pathname.includes("/home/all") &&
+    !pathname.includes("/home/pending");
+
+  if (isServerRoute) {
+    return null;
+  }
+
   return (
     <nav className="flex flex-col py-[16px]">
       <header className="flex items-center justify-between px-6">
@@ -48,7 +59,7 @@ export function FriendsNav() {
                       pathname === state.href
                         ? "bg-zinc-600 text-white"
                         : "text-gray-400"
-                    } flex items-center px-2 rounded-[4px] hover:bg-[#2c2d31] hover:text-white`}
+                    } flex items-center px-2 rounded-[4px] hover:bg-[#2c2d31] hover:text-white font-semibold`}
                   >
                     {state.label}
                   </Link>
@@ -57,7 +68,7 @@ export function FriendsNav() {
             })}
           </ul>
 
-          <button className="bg-[#15803d] rounded-[4px] px-2 text-white">
+          <button className="bg-[#15803d] rounded-[4px] px-2 text-white font-semibold">
             Add friend
           </button>
         </div>

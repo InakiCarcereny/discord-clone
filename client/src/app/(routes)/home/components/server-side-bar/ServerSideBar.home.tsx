@@ -22,11 +22,7 @@ export function ServerSideBar({ open, handleOpen }: ServerSideBarProps) {
   };
 
   return (
-    <aside
-      className={`h-screen w-[70px] px-2 pt-4 flex flex-col items-center ${
-        open ? "blur-[2px]" : ""
-      }`}
-    >
+    <aside className={`h-screen w-[70px] px-2 pt-4 flex flex-col items-center`}>
       <Link
         href="/home"
         className={`${
@@ -59,15 +55,24 @@ export function ServerSideBar({ open, handleOpen }: ServerSideBarProps) {
                   className="flex items-center"
                   href={`/home/${server._id}`}
                 >
-                  <div className="border-2 border-white rounded-full h-2 group-hover:h-6 duration-200 absolute left-0"></div>
+                  <div
+                    className={`${
+                      pathname === `/home/${server._id}`
+                        ? "h-10"
+                        : "h-2 group-hover:h-6"
+                    } border-2 border-white rounded-full duration-200 absolute left-0`}
+                  />
+
                   <img
                     src={logoUrl}
                     alt={server.tittle}
-                    className="w-12 h-12 duration-200 rounded-3xl hover:rounded-[15px] "
+                    className={`${
+                      pathname === `/home/${server._id}` ? "rounded-[15px]" : ""
+                    } w-12 h-12 duration-200 rounded-3xl hover:rounded-[15px] `}
                   />
                 </Link>
 
-                <div className="absolute left-20 px-2 py-4 text-sm text-white bg-zinc-900 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold flex items-center gap-2">
+                <div className="absolute left-20 px-2 py-4 text-sm text-white bg-zinc-900 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold items-center gap-2 hidden group-hover:flex">
                   <World className="text-pink-600 h-4 w-4" />
                   {server.tittle}
                 </div>

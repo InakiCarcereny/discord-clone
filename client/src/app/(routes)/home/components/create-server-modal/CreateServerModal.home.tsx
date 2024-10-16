@@ -33,7 +33,7 @@ export function CreateServerModal({ setOpen }: CreateServerModalProps) {
   };
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center absolute">
+    <div className="h-screen w-screen flex items-center justify-center absolute bg-black/50">
       <form
         onSubmit={onSubmit}
         className="bg-zinc-600/20 rounded-[6px] w-[450px] h-[450px] flex flex-col justify-between"
