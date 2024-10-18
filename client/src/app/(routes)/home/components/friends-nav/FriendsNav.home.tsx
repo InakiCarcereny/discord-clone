@@ -74,21 +74,33 @@ export function FriendsNav() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Message className="text-gray-400 h-7 w-7 hover:text-white" />
-          <Separator className="text-zinc-400" />
-          <Tray className="text-gray-400 h-7 w-7 hover:text-white" />
+          <button className="relative group">
+            <Message className="text-gray-400 h-7 w-7 hover:text-white" />
+            <span className="absolute group-hover:flex hidden px-2 py-2 text-sm bg-zinc-900 w-[100px] rounded-[4px] top-8 right-2 text-white font-semibold items-center justify-center">
+              New MD
+            </span>
+          </button>
+          <Separator className="text-zinc-400" />{" "}
+          <button className="relative group">
+            <Tray className="text-gray-400 h-7 w-7 hover:text-white" />
+            <span className="absolute group-hover:flex hidden px-2 py-2 text-sm bg-zinc-900 w-[100px] rounded-[4px] top-8 right-2 text-white font-semibold items-center justify-center">
+              Entry tray
+            </span>
+          </button>
         </div>
       </header>
 
       <div className="border-[0.1px] border-[#27282b] rounded-full w-full mt-3"></div>
 
-      <div className="max-w-[95%] h-10 bg-[#1c1d1f] rounded-[4px] mt-3 ml-10 flex items-center justify-center">
-        <input
-          type="search"
-          placeholder="Search"
-          className="text-zinc-400 bg-transparent w-full focus:outline-none px-4"
-        />
-        <Search className="text-white h-8 w-8" />
+      <div className="px-10">
+        <div className="w-full h-10 bg-[#1c1d1f] rounded-[4px] mt-3 flex items-center justify-center">
+          <input
+            type="search"
+            placeholder="Search"
+            className="text-zinc-400 bg-transparent w-full focus:outline-none px-4"
+          />
+          <Search className="text-white h-8 w-8" />
+        </div>
       </div>
     </nav>
   );

@@ -57,7 +57,9 @@ export default function HomeLayout({
 
   const serverId = servers.map((server) => server._id);
 
-  const isMatchingServer = serverId.some((id) => pathname === `/home/${id}`);
+  const isMatchingServer =
+    serverId.some((id) => pathname === `/home/${id}`) ||
+    pathname === "/home/profile";
 
   return (
     <div
@@ -81,7 +83,11 @@ export default function HomeLayout({
         </main>
       </div>
 
-      <div className="absolute bottom-0 left-[70px] bg-[#232428] w-[240px] h-[50px] flex items-center justify-between px-1 border-t border-[#33353b]">
+      <div
+        className={`${
+          pathname === "/home/profile" ? "hidden" : ""
+        } absolute bottom-0 left-[70px] bg-[#232428] w-[240px] h-[50px] flex items-center justify-between px-1 border-t border-[#33353b]`}
+      >
         <User />
       </div>
 

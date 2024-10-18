@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { AuthProvider } from "./(routes)/register/context/auth.context";
 import { ServerProvider } from "./(routes)/home/context/server.context";
+import { UserProvider } from "./(routes)/home/context/user.context";
 import { PrimeReactProvider } from "primereact/api";
 
 const poppins = Poppins({
@@ -26,7 +27,9 @@ export default function RootLayout({
       <body className={`${poppins.className} ${poppins.className} antialiased`}>
         <AuthProvider>
           <PrimeReactProvider>
-            <ServerProvider>{children}</ServerProvider>
+            <ServerProvider>
+              <UserProvider>{children}</UserProvider>
+            </ServerProvider>
           </PrimeReactProvider>
         </AuthProvider>
       </body>
