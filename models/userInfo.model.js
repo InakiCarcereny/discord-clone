@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const userInfoSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      requiered: false,
+    },
     nickname: {
       type: String,
       requiered: false,
@@ -19,6 +23,14 @@ const userInfoSchema = new mongoose.Schema(
       requiered: false,
     },
     state: {
+      type: String,
+      requiered: false,
+    },
+    primaryColor: {
+      type: String,
+      requiered: false,
+    },
+    secondaryColor: {
       type: String,
       requiered: false,
     },

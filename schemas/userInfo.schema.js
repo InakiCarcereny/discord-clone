@@ -1,40 +1,39 @@
 import { z } from "zod";
 
 export const userInfoSchema = z.object({
+  name: z
+    .string()
+    .max(25, {
+      message: "Name must be at most 25 characters long",
+    })
+    .trim()
+    .optional(),
   nickname: z
-    .string({
-      required_error: "Nickname is required",
-    })
-    .min(3, {
-      message: "Nickname must be at least 3 characters long",
-    })
+    .string()
     .max(25, {
       message: "Nickname must be at most 25 characters long",
     })
-    .trim(),
-  avatar: z.instanceof(Buffer, {
-    required_error: "Avatar is required",
-  }),
-  banner: z.instanceof(Buffer, {
-    required_error: "Banner is required",
-  }),
+    .trim()
+    .optional(),
+  avatar: z.any().optional(),
+  banner: z.any().optional(),
   description: z
-    .string({
-      required_error: "Description is required",
-    })
+    .string()
     .max(150, {
       message: "Description must be at most 150 characters long",
     })
-    .trim(),
+    .trim()
+    .optional(),
   state: z
-    .string({
-      required_error: "State is required",
-    })
+    .string()
     .min(2, {
       message: "State must be at least 2 characters long",
     })
     .max(25, {
       message: "State must be at most 25 characters long",
     })
-    .trim(),
+    .trim()
+    .optional(),
+  primaryColor: z.string().optional(),
+  secondaryColor: z.string().optional(),
 });
