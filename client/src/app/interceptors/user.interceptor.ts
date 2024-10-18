@@ -1,4 +1,5 @@
 import axios from "./axios.config";
 
-export const getUserRequest = async (data) =>
-  axios.get(`/user/${data.id}`, data);
+export const getUserInfoRequest = () => axios.get("/info");
+
+export const updataUserInfoRequest = async (data) => axios.put("/info", data);
