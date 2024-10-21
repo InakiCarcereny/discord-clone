@@ -14,10 +14,10 @@ export interface UserContextTypes {
 
 export interface User {
   name: string;
-  pronouns: string;
-  about: string;
+  nickname: string;
+  description: string;
   avatar: string;
-  poster: string;
+  banner: string;
   primaryColor: string;
   secondaryColor: string;
 }
@@ -54,7 +54,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const updateUserInfo = async (data: User) => {
     try {
       const res = await updataUserInfoRequest(data);
-      console.log(res);
       setUserInfo(res.data);
     } catch (err: any) {
       console.log(err);
