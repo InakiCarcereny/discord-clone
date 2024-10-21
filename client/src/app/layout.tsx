@@ -5,6 +5,7 @@ import "./globals.css";
 import { AuthProvider } from "./(routes)/register/context/auth.context";
 import { ServerProvider } from "./(routes)/home/context/server.context";
 import { UserProvider } from "./(routes)/home/context/user.context";
+import { ChannelProvider } from "./(routes)/home/(routes)/[id]/context/channel.context";
 import { PrimeReactProvider } from "primereact/api";
 
 const poppins = Poppins({
@@ -28,7 +29,9 @@ export default function RootLayout({
         <AuthProvider>
           <PrimeReactProvider>
             <ServerProvider>
-              <UserProvider>{children}</UserProvider>
+              <UserProvider>
+                <ChannelProvider>{children}</ChannelProvider>
+              </UserProvider>
             </ServerProvider>
           </PrimeReactProvider>
         </AuthProvider>

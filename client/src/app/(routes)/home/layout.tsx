@@ -15,6 +15,7 @@ import { FriendsNav } from "./components/friends-nav/FriendsNav.home";
 import { User } from "./components/user/User.home";
 import { CreateServerModal } from "./components/create-server-modal/CreateServerModal.home";
 import { useServer } from "./context/server.context";
+import { useChannel } from "./(routes)/[id]/context/channel.context";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,6 +32,8 @@ export default function HomeLayout({
   const { isAuthenticated, isLoading } = useAuth();
 
   const { servers } = useServer();
+
+  const { channels } = useChannel();
 
   const router = useRouter();
 
@@ -66,7 +69,7 @@ export default function HomeLayout({
       className={`${poppins.className} ${poppins.className} antialiased flex h-screen w-screen bg-[#1c1d1f]`}
     >
       <div className="flex">
-        <ServerSideBar open={open} handleOpen={handleOpen} />
+        <ServerSideBar handleOpen={handleOpen} />
 
         <NavigateSideBar open={open} />
       </div>

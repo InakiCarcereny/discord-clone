@@ -11,6 +11,8 @@ import { Camp } from "@/app/icons/Camp";
 import { Users } from "@/app/icons/Users";
 import { Tray } from "@/app/icons/Tray";
 import { Search } from "@/app/icons/Search";
+import { useChannel } from "./context/channel.context";
+import Link from "next/link";
 
 export default function ServerLayout({
   children,
@@ -20,6 +22,8 @@ export default function ServerLayout({
   params: { id: string };
 }) {
   const { servers } = useServer();
+
+  const { channels } = useChannel();
 
   const serverId = params.id;
 
@@ -53,14 +57,37 @@ export default function ServerLayout({
                 </div>
 
                 <div className="flex flex-col gap-6 px-4">
-                  <div className="flex items-center justify-between cursor-pointer group">
-                    <div className="flex items-center gap-1">
-                      <ArrowRight className="text-gray-400 h-3 w-3" />
-                      <span className="text-xs font-semibold text-gray-400 group-hover:text-white">
-                        TEXT CHANNELS
-                      </span>
+                  <div className="flex flex-col">
+                    <div className="flex items-center justify-between cursor-pointer group">
+                      <div className="flex items-center gap-1">
+                        <ArrowRight className="text-gray-400 h-3 w-3" />
+                        <span className="text-xs font-semibold text-gray-400 group-hover:text-white">
+                          TEXT CHANNELS
+                        </span>
+                      </div>
+                      <Plus className="text-gray-400" />
                     </div>
-                    <Plus className="text-gray-400" />
+
+                    <ul className="flex flex-col gap-1 mt-1">
+                      {channels.map((channel) => {
+                        return (
+                          <li
+                            key={channel._id}
+                            className="flex flex-col gap-2 px-2 py-1 hover:bg-[#323338] duration-200 rounded-[4px]"
+                          >
+                            <Link
+                              href={`/home/${channel.server}/${channel._id}`}
+                              className="flex items-center gap-2"
+                            >
+                              <Hash className="text-gray-400 h-5 w-5" />
+                              <span className="text-zinc-200 font-semibold">
+                                {channel.name}
+                              </span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
 
                   <div className="flex items-center justify-between cursor-pointer group">
@@ -83,7 +110,7 @@ export default function ServerLayout({
           <header className="w-full flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Hash className="text-gray-400 h-7 w-7" />
-              <span className="text-zinc-200 font-semibold">General</span>
+              <h3 className="text-zinc-200 font-semibold">hola</h3>
             </div>
             <div className="flex items-center gap-4">
               <button>
