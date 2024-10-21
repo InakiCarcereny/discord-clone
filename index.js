@@ -15,6 +15,7 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+
 app.use(cookieParser());
 app.use(
   cors({
@@ -24,9 +25,12 @@ app.use(
 );
 
 app.use("/auth", userRoutes);
+
 app.use("/server", serverRoutes);
-app.use("/channel", channelRoutes);
+app.use("/server", channelRoutes);
+
 app.use("/event", eventRoutes);
+
 app.use("/info", infoRoutes);
 
 app.listen(PORT, () => {

@@ -15,8 +15,7 @@ routes.get("/", getUserInfo);
 
 routes.put(
   "/",
-  upload.single("avatar"),
-  upload.single("banner"),
+  upload.fields([{ name: "avatar" }, { name: "banner" }]),
   isValidate(userInfoSchema),
   updateInfo
 );

@@ -27,9 +27,7 @@ export const getChannels = async (req, res) => {
   }
 
   try {
-    const data = jwt.verify(token, JWT_SECRET);
-
-    const { id } = data;
+    const { id } = req.params;
 
     const serverFind = await Server.findById(id);
 
@@ -51,20 +49,34 @@ export const createChannel = async (req, res) => {
   const token = req.cookies.token;
 
   if (!token) {
-    res.status(401).json(["Unauthorized"]);
+    return res.status(401).json(["Unauthorized"]);
   }
 
   try {
     const data = jwt.verify(token, JWT_SECRET);
 
-    const { serverId } = data;
+    const userId = data.id;
 
-    const serverFind = await Server.findById(serverId);
+    console.log(userId); // Tomamos el ID del usuario desde el token
+
+    // Usar el serverId desde los parámetros de la ruta
+    const { id } = req.params;
+
+    console.log(id);
+
+    // Encontrar el servidor con el ID proporcionado
+    const serverFind = await Server.findById(id);
 
     if (!serverFind) {
-      return res.status(400).json(["Server not found"]);
+      return res.status(404).json(["Server not found"]);
     }
 
+    // Verificar que el usuario sea el dueño del servidor
+    if (serverFind.user.toString() !== userId) {
+      return res.status(403).json(["Forbidden"]);
+    }
+
+    // Crear el canal
     const { name } = req.body;
 
     const channel = new Channel({
@@ -76,6 +88,7 @@ export const createChannel = async (req, res) => {
 
     res.status(201).json(newChannel);
   } catch (err) {
+    console.error(err);
     res.status(500).json(["Error creating channel"]);
   }
 };
@@ -105,7 +118,7 @@ export const deleteChannel = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deleteChannel = await Chanell.findByIdAndDelete(id);
+    const deleteChannel = await Channel.findByIdAndDelete(id);
 
     if (!deleteChannel) {
       return res.status(400).json(["Channel not found"]);

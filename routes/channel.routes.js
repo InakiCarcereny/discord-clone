@@ -15,14 +15,14 @@ import { isValidate } from "../middleware/user.middleware.js";
 
 const routes = Router();
 
-routes.get("/:id", getChannel);
+routes.get("/:id/channel/:id", getChannel);
 
-routes.get("/", getChannels);
+routes.get("/:id/channel", getChannels);
 
-routes.post("/", isValidate(createChannelSchema), createChannel);
+routes.post("/:id/channel", isValidate(createChannelSchema), createChannel);
 
-routes.put("/:id", isValidate(updateChannelSchema), updateChannel);
+routes.put("/:id/channel/:id", isValidate(updateChannelSchema), updateChannel);
 
-routes.delete("/:id", deleteChannel);
+routes.delete("/:id/channel/:id", deleteChannel);
 
 export default routes;

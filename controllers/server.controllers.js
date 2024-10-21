@@ -1,5 +1,6 @@
 import Server from "../models/server.model.js";
 import User from "../models/auth.model.js";
+import Channel from "../models/channel.model.js";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config.js";
 
@@ -84,6 +85,13 @@ export const createServer = async (req, res) => {
     });
 
     const savedServer = await server.save();
+
+    const defaultChannel = new Channel({
+      name: "General",
+      server: savedServer._id,
+    });
+
+    await defaultChannel.save();
 
     res.status(201).json(savedServer);
   } catch (err) {
