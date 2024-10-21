@@ -6,8 +6,10 @@ import { useAuth } from "@/app/(routes)/register/context/auth.context";
 import { Cross } from "@/app/icons/Cross";
 import { Dot } from "@/app/icons/Dot";
 import { Pen } from "@/app/icons/Pen";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+
+import { useRouter } from "next/navigation";
+
+import { ChangeEvent, useEffect, useState } from "react";
 import { useUser } from "../../context/user.context";
 import FileUploadComp from "../../components/file-upload/FileUpload.home";
 
@@ -16,7 +18,7 @@ export interface FormValues {
   nickname: string;
   description: string;
   avatar: string;
-  poster: string;
+  banner: string;
   primaryColor: string;
   secondaryColor: string;
   state: string;
@@ -29,13 +31,20 @@ export default function Profile() {
 
   const { register, handleSubmit, watch, setValue } = useForm<FormValues>();
 
-  const primaryColor = watch("primaryColor", "#5865f2");
-  const secondaryColor = watch("secondaryColor", "#5865f2");
+  const router = useRouter();
 
   const [poster, setPoster] = useState<string | undefined>(undefined);
   const [avatar, setAvatar] = useState<string | undefined>(undefined);
 
-  const posterPreview = watch("poster");
+  const [openAvatar, setOpenAvatar] = useState(false);
+  const [openPoster, setOpenPoster] = useState(false);
+
+  const [succes, setSucces] = useState("");
+
+  const primaryColor = watch("primaryColor", "#5865f2");
+  const secondaryColor = watch("secondaryColor", "#5865f2");
+
+  const posterPreview = watch("banner");
   const avatarPreview = watch("avatar");
 
   useEffect(() => {
@@ -58,45 +67,72 @@ export default function Profile() {
     }
   }, [avatarPreview]);
 
-  const [openAvatar, setOpenAvatar] = useState(false);
-  const [openPoster, setOpenPoster] = useState(false);
-
-  const handleOpen = () => {
+  const handleOpen = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setOpenAvatar(!openAvatar);
   };
 
-  const handleOpenPoster = () => {
+  const handleOpenPoster = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setOpenPoster(!openPoster);
   };
 
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
 
-    formData.append("avatar", data.avatar[0]);
-    formData.append("banner", data.poster[0]);
+    if (data.avatar) {
+      formData.append("avatar", data.avatar[0]);
+    }
+    if (data.banner) {
+      formData.append("banner", data.banner[0]);
+    }
     formData.append("description", data.description);
     formData.append("state", data.state);
     formData.append("primaryColor", data.primaryColor);
     formData.append("secondaryColor", data.secondaryColor);
+    formData.append("name", data.name);
+    formData.append("nickname", data.nickname);
 
     updateUserInfo(formData);
+
+    setSucces("Profile updated successfully");
   });
 
-  const handleAvatarSelect = (files: File[]) => {
-    setValue("avatar", files);
+  const handleAvatarSelect = (files) => {
+    if (files.length > 0) {
+      setValue("avatar", files);
+    }
   };
 
-  const handlePosterSelect = (files: File[]) => {
-    setValue("poster", files);
+  const handlePosterSelect = (files) => {
+    if (files.length > 0) {
+      setValue("banner", files);
+    }
   };
+
+  const darkenColor = (hex, percent) => {
+    hex = hex.replace(/^#/, "");
+
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+
+    r = Math.max(0, Math.min(255, Math.floor(r * (1 - percent))));
+    g = Math.max(0, Math.min(255, Math.floor(g * (1 - percent))));
+    b = Math.max(0, Math.min(255, Math.floor(b * (1 - percent))));
+
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  };
+
+  const primaryColorDark = darkenColor(primaryColor, 0.4);
 
   return (
     <div className="flex flex-col gap-8 h-full flex-grow">
       <header className="flex items-center justify-between py-4 px-10">
         <h3 className="text-white font-semibold text-lg">User Profile</h3>
-        <Link href="/home">
+        <button onClick={() => router.back()}>
           <Cross className="text-gray-400 hover:text-white w-10 h-10" />
-        </Link>
+        </button>
       </header>
       <section className="flex gap-24 h-full w-full px-10">
         <form onSubmit={onSubmit} className="flex flex-col gap-6 w-[300px]">
@@ -232,6 +268,7 @@ export default function Profile() {
           >
             Save changes
           </button>
+          <span className="text-sm font-semibold text-green-700">{succes}</span>
         </form>
 
         <div className="flex flex-col gap-1">
@@ -244,7 +281,7 @@ export default function Profile() {
           >
             <div
               style={{
-                background: primaryColor,
+                background: primaryColorDark,
               }}
               className="flex flex-col w-full h-full rounded-[8px] relative border border-zinc-900/20"
             >
