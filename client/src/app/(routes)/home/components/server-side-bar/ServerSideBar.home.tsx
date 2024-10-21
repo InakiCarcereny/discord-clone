@@ -6,11 +6,10 @@ import { useServer } from "../../context/server.context";
 import { World } from "@/app/icons/World";
 
 interface ServerSideBarProps {
-  open: boolean;
   handleOpen: () => void;
 }
 
-export function ServerSideBar({ open, handleOpen }: ServerSideBarProps) {
+export function ServerSideBar({ handleOpen }: ServerSideBarProps) {
   const pathname = usePathname();
 
   const { servers } = useServer();
@@ -73,7 +72,7 @@ export function ServerSideBar({ open, handleOpen }: ServerSideBarProps) {
                 </Link>
 
                 <div className="absolute left-20 px-2 py-4 text-sm text-white bg-zinc-900 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold items-center gap-2 hidden group-hover:flex">
-                  <World className="text-pink-600 h-4 w-4" />
+                  <World className="text-pink-600 h-3 w-3" />
                   {server.tittle}
                 </div>
               </li>
