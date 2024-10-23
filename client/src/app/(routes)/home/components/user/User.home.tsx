@@ -90,7 +90,7 @@ export function User() {
         >
           <div
             style={{ background: primaryColorDark }}
-            className="flex flex-col w-full h-full rounded-[8px] relative border border-zinc-900/20"
+            className="flex flex-col w-full h-full rounded-[8px] relative border border-zinc-900/20 overflow-hidden"
           >
             <img
               src={posterBase64}

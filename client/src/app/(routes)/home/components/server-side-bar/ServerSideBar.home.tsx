@@ -25,7 +25,7 @@ export function ServerSideBar({ handleOpen }: ServerSideBarProps) {
       <Link
         href="/home"
         className={`${
-          pathname.startsWith("/home") ? "rounded-[18px]" : ""
+          pathname === "/home" ? "rounded-[18px]" : ""
         } bg-[#5865f2] flex flex-col items-center cursor-pointer rounded-3xl duration-200 px-2 py-2 hover:rounded-[18px]`}
       >
         <Discord className="text-white h-8 w-8" />
@@ -56,7 +56,7 @@ export function ServerSideBar({ handleOpen }: ServerSideBarProps) {
                 >
                   <div
                     className={`${
-                      pathname === `/home/${server._id}`
+                      pathname.startsWith(`/home/${server._id}`)
                         ? "h-10"
                         : "h-2 group-hover:h-6"
                     } border-2 border-white rounded-full duration-200 absolute left-0`}
@@ -66,12 +66,14 @@ export function ServerSideBar({ handleOpen }: ServerSideBarProps) {
                     src={logoUrl}
                     alt={server.tittle}
                     className={`${
-                      pathname === `/home/${server._id}` ? "rounded-[15px]" : ""
+                      pathname.startsWith(`/home/${server._id}`)
+                        ? "rounded-[15px]"
+                        : ""
                     } w-12 h-12 duration-200 rounded-3xl hover:rounded-[15px] `}
                   />
                 </Link>
 
-                <div className="absolute left-20 px-2 py-4 text-sm text-white bg-zinc-900 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold items-center gap-2 hidden group-hover:flex">
+                <div className="absolute left-20 px-2 py-4 text-sm text-white bg-zinc-900 rounded-[4px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold items-center gap-2 hidden group-hover:flex z-50">
                   <World className="text-pink-600 h-3 w-3" />
                   {server.tittle}
                 </div>
