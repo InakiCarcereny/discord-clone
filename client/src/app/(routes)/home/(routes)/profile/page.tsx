@@ -27,7 +27,7 @@ export interface FormValues {
 export default function Profile() {
   const { user } = useAuth();
 
-  const { updateUserInfo } = useUser();
+  const { updateUserInfo, userInfo } = useUser();
 
   const { register, handleSubmit, watch, setValue } = useForm<FormValues>();
 
@@ -125,6 +125,18 @@ export default function Profile() {
   };
 
   const primaryColorDark = darkenColor(primaryColor, 0.4);
+
+  useEffect(() => {
+    setValue("name", userInfo?.name);
+    setValue("nickname", userInfo?.nickname);
+    setValue("description", userInfo?.description);
+    setValue("avatar", userInfo?.avatar);
+    console.log(userInfo?.avatar);
+    setValue("banner", userInfo?.banner);
+    console.log(userInfo?.banner);
+    setValue("primaryColor", userInfo?.primaryColor);
+    setValue("secondaryColor", userInfo?.secondaryColor);
+  }, []);
 
   return (
     <div className="flex flex-col gap-8 h-full flex-grow">
