@@ -14,8 +14,6 @@ import { NavigateSideBar } from "./components/navigate-side-bar/NavigateSideBar.
 import { FriendsNav } from "./components/friends-nav/FriendsNav.home";
 import { User } from "./components/user/User.home";
 import { CreateServerModal } from "./components/create-server-modal/CreateServerModal.home";
-import { useServer } from "./context/server.context";
-import { useChannel } from "./(routes)/[id]/context/channel.context";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,10 +29,6 @@ export default function HomeLayout({
 
   const { isAuthenticated, isLoading } = useAuth();
 
-  const { servers } = useServer();
-
-  const { channels } = useChannel();
-
   const router = useRouter();
 
   const pathname = usePathname();
@@ -45,10 +39,8 @@ export default function HomeLayout({
   useEffect(() => {
     if (!isLoading) {
       if (isAuthenticated) {
-        console.log("is authenticated");
         router.push("/home");
       } else {
-        console.log("is not authenticated");
         router.push("/login");
       }
     }
@@ -57,12 +49,6 @@ export default function HomeLayout({
   const handleOpen = () => {
     setOpen(!open);
   };
-
-  const serverId = servers.map((server) => server._id);
-
-  const isMatchingServer =
-    serverId.some((id) => pathname === `/home/${id}`) ||
-    pathname === "/home/profile";
 
   return (
     <div
@@ -77,13 +63,7 @@ export default function HomeLayout({
       <div className={`flex flex-col w-full bg-[#323338]`}>
         {showFriendsNav && <FriendsNav />}
 
-        <main
-          className={`w-full h-full bg-[#323338] ${
-            isMatchingServer ? "px-0" : "px-10"
-          }`}
-        >
-          {children}
-        </main>
+        <main className={`w-full h-full bg-[#323338]`}>{children}</main>
       </div>
 
       <div
