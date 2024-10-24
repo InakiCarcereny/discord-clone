@@ -12,14 +12,14 @@ import { isValidate } from "../middleware/user.middleware.js";
 
 const routes = Router();
 
-routes.get("/:id", getEvent);
+routes.get("/:id/event/:id", getEvent);
 
-routes.get("/", getEvents);
+routes.get("/:id/event", getEvents);
 
-routes.post("/", isValidate(EventSchema), createEvent);
+routes.post("/:id/event", isValidate(EventSchema), createEvent);
 
-routes.put("/:id", isValidate(EventSchema), updateEvent);
+routes.put("/:id/event/:id", isValidate(EventSchema), updateEvent);
 
-routes.delete("/:id", deleteEvent);
+routes.delete("/:id/event/:id", deleteEvent);
 
 export default routes;

@@ -27,11 +27,9 @@ export const getEvents = async (req, res) => {
   }
 
   try {
-    const data = jwt.verify(token, JWT_SECRET);
+    const { id } = req.params;
 
-    const { serverId } = data;
-
-    const serverFind = await Server.findById(serverId);
+    const serverFind = await Server.findById(id);
 
     if (!serverFind) {
       return res.status(400).json(["Server not found"]);
@@ -55,18 +53,15 @@ export const createEvent = async (req, res) => {
   }
 
   try {
-    const data = jwt.verify(token, JWT_SECRET);
+    const { id } = req.params;
 
-    const { serverId } = data;
-
-    const serverFind = await Server.findById(serverId);
+    const serverFind = await Server.findById(id);
 
     if (!serverFind) {
       return res.status(400).json(["Server not found"]);
     }
 
     const {
-      ubication,
       theme,
       dateInit,
       dateEnd,
@@ -78,7 +73,6 @@ export const createEvent = async (req, res) => {
     } = req.body;
 
     const event = new Event({
-      ubication,
       theme,
       dateInit,
       dateEnd,
@@ -102,7 +96,6 @@ export const createEvent = async (req, res) => {
 export const updateEvent = async (req, res) => {
   const { id } = req.params;
   const {
-    ubication,
     theme,
     dateInit,
     dateEnd,
@@ -117,7 +110,6 @@ export const updateEvent = async (req, res) => {
     const updateEvent = await Event.findByIdAndUpdate(
       id,
       {
-        ubication,
         theme,
         dateInit,
         dateEnd,

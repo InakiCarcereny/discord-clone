@@ -1,17 +1,6 @@
 import { z } from "zod";
 
 export const EventSchema = z.object({
-  ubication: z
-    .string({
-      required_error: "Ubication is required",
-    })
-    .min(5, {
-      message: "Ubication must be at least 5 characters long",
-    })
-    .max(50, {
-      message: "Ubication must be at most 50 characters long",
-    })
-    .trim(),
   theme: z
     .string({
       required_error: "Theme is required",
@@ -23,20 +12,8 @@ export const EventSchema = z.object({
       message: "Theme must be at most 50 characters long",
     })
     .trim(),
-  dateInit: z
-    .date({
-      required_error: "Date init is required",
-    })
-    .min(new Date(), {
-      message: "Date init must be in the future",
-    }),
-  dateEnd: z
-    .date({
-      required_error: "Date end is required",
-    })
-    .min(new Date(), {
-      message: "Date end must be in the future",
-    }),
+  dateInit: z.string(),
+  dateEnd: z.string(),
   timeInit: z
     .string({
       required_error: "Time init is required",
