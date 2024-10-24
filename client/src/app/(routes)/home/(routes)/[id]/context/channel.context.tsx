@@ -5,6 +5,7 @@ import {
   deleteChannelRequest,
   getChannelsRequest,
 } from "@/app/interceptors/channel.interceptor";
+import { AxiosError } from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export interface ChannelContextTypes {
@@ -51,12 +52,14 @@ export function ChannelProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const createChannel = async (data: Channel) => {
+  const createChannel = async (data: Channel, id: string): Promise<void> => {
     try {
-      const res = await createChannelRequest(data);
+      const res = await createChannelRequest(data, id);
       setChannels((prevState) => [...prevState, res.data]);
-    } catch (err: any) {
-      setErrors(err.response.data);
+    } catch (err: unknown) {
+      if (err instanceof AxiosError && err.response) {
+        setErrors(err.response.data);
+      }
     }
   };
 

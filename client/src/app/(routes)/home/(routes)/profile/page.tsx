@@ -7,11 +7,10 @@ import { Cross } from "@/app/icons/Cross";
 import { Dot } from "@/app/icons/Dot";
 import { Pen } from "@/app/icons/Pen";
 
-import { useRouter } from "next/navigation";
-
 import { ChangeEvent, useEffect, useState } from "react";
 import { useUser } from "../../context/user.context";
 import FileUploadComp from "../../components/file-upload/FileUpload.home";
+import { ProfileHeader } from "./components/profile-header/ProfileHeader";
 
 export interface FormValues {
   name: string;
@@ -30,8 +29,6 @@ export default function Profile() {
   const { updateUserInfo, userInfo } = useUser();
 
   const { register, handleSubmit, watch, setValue } = useForm<FormValues>();
-
-  const router = useRouter();
 
   const [poster, setPoster] = useState<string | undefined>(undefined);
   const [avatar, setAvatar] = useState<string | undefined>(undefined);
@@ -140,12 +137,8 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col gap-8 h-full flex-grow">
-      <header className="flex items-center justify-between py-4 px-10">
-        <h3 className="text-white font-semibold text-lg">User Profile</h3>
-        <button onClick={() => router.back()}>
-          <Cross className="text-gray-400 hover:text-white w-10 h-10" />
-        </button>
-      </header>
+      <ProfileHeader />
+
       <section className="flex gap-24 h-full w-full px-10">
         <form onSubmit={onSubmit} className="flex flex-col gap-6 w-[300px]">
           <div className="flex flex-col gap-1">
