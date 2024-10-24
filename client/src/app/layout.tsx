@@ -7,6 +7,7 @@ import { ServerProvider } from "./(routes)/home/context/server.context";
 import { UserProvider } from "./(routes)/home/context/user.context";
 import { ChannelProvider } from "./(routes)/home/(routes)/[id]/context/channel.context";
 import { PrimeReactProvider } from "primereact/api";
+import { EventProvider } from "./(routes)/home/(routes)/[id]/context/event.context";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -30,7 +31,9 @@ export default function RootLayout({
           <PrimeReactProvider>
             <ServerProvider>
               <UserProvider>
-                <ChannelProvider>{children}</ChannelProvider>
+                <ChannelProvider>
+                  <EventProvider>{children}</EventProvider>
+                </ChannelProvider>
               </UserProvider>
             </ServerProvider>
           </PrimeReactProvider>

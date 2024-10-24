@@ -124,16 +124,18 @@ export default function Profile() {
   const primaryColorDark = darkenColor(primaryColor, 0.4);
 
   useEffect(() => {
-    setValue("name", userInfo?.name);
-    setValue("nickname", userInfo?.nickname);
-    setValue("description", userInfo?.description);
-    setValue("avatar", userInfo?.avatar);
-    console.log(userInfo?.avatar);
-    setValue("banner", userInfo?.banner);
-    console.log(userInfo?.banner);
-    setValue("primaryColor", userInfo?.primaryColor);
-    setValue("secondaryColor", userInfo?.secondaryColor);
-  }, []);
+    if (userInfo) {
+      setValue("name", userInfo?.name);
+      setValue("nickname", userInfo?.nickname);
+      setValue("description", userInfo?.description);
+      setValue("avatar", userInfo?.avatar);
+      console.log(userInfo?.avatar);
+      setValue("banner", userInfo?.banner);
+      console.log(userInfo?.banner);
+      setValue("primaryColor", userInfo?.primaryColor);
+      setValue("secondaryColor", userInfo?.secondaryColor);
+    }
+  }, [setValue, userInfo]);
 
   return (
     <div className="flex flex-col gap-8 h-full flex-grow">

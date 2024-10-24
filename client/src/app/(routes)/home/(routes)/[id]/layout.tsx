@@ -9,10 +9,11 @@ import { ServerHeader } from "./components/server-header/ServerHeader";
 import { ServerFooter } from "./components/server-footer/ServerFooter";
 import { ServerAsideFriends } from "./components/server-aside-friends/ServerAsideFriends";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CreateChannelModal } from "./components/create-channel-modal/CreateChannelModal";
 import { CreateEventModal } from "./components/create-event-modal/CreateEventModal";
+import { useEvent } from "./context/event.context";
 
 export interface FormValues {
   name: string;
@@ -27,8 +28,11 @@ export default function ServerLayout({
   params: { id: string };
 }) {
   const [openChannel, setOpenChannel] = useState(null);
+  const [openEvent, setOpenEvent] = useState(false);
 
   const { channels } = useChannel();
+
+  const { getEvents, events } = useEvent();
 
   const pathname = usePathname();
 
@@ -46,12 +50,24 @@ export default function ServerLayout({
     setOpenChannel((prevState) => (prevState === option ? null : option));
   };
 
+  const handleOpenEvent = () => {
+    console.log("click");
+    setOpenEvent(!openEvent);
+  };
+
+  useEffect(() => {
+    if (events) {
+      getEvents(serverId);
+    }
+  }, [getEvents, serverId, events]);
+
   return (
     <div className="flex w-full h-full">
       <ServerAside
         serverId={serverId}
         currentChannel={currentChannel}
         handleOpenChannel={handleOpenChannel}
+        handleEvent={handleOpenEvent}
       />
 
       <div className="h-full flex-grow flex flex-col">
@@ -78,10 +94,12 @@ export default function ServerLayout({
               setOpenChannel={setOpenChannel}
             />
           )}
-          {openChannel === 5 && (
+          {openChannel === 4 && (
             <CreateEventModal
               serverId={serverId}
               setOpenChannel={setOpenChannel}
+              openEvent={openEvent}
+              handleEvent={handleOpenEvent}
             />
           )}
         </div>
