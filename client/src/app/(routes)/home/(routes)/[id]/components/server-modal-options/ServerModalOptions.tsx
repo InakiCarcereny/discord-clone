@@ -6,7 +6,7 @@ export interface ServerModalOptionsProps {
 
 export function ServerModalOptions({ handleOpenChannel }) {
   return (
-    <div className="absolute top-16 w-[210px] h-[225px] bg-zinc-900 rounded-[4px] flex flex-col gap-2 px-2 py-2 text-start">
+    <div className="absolute top-16 w-[210px] h-[190px] bg-zinc-900 rounded-[4px] flex flex-col gap-2 px-2 py-2 text-start">
       <ul className="flex flex-col gap-2">
         {serverOptions.map((option) => {
           return (
@@ -19,13 +19,13 @@ export function ServerModalOptions({ handleOpenChannel }) {
                 <span
                   className={`font-semibold text-sm ${
                     option.id === 1 ? "text-[#686dac]" : ""
-                  } ${option.id === 6 ? "text-red-500" : {}}`}
+                  } ${option.id === 5 ? "text-red-500" : {}}`}
                 >
                   {option.label}
                 </span>
                 <span
                   className={`${option.id === 1 ? "text-[#686dac]" : ""} ${
-                    option.id === 6 ? "text-red-500" : {}
+                    option.id === 5 ? "text-red-500" : {}
                   }`}
                 >
                   {option.icon}

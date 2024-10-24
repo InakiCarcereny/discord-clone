@@ -17,17 +17,21 @@ import { useChannel } from "../../context/channel.context";
 
 import { Channel } from "../../context/channel.context";
 import { ServerModalOptions } from "../server-modal-options/ServerModalOptions";
+import { useEvent } from "../../context/event.context";
+import { Settings } from "@/app/icons/Settings";
 
 export interface ServerAsideProps {
   serverId: string;
   currentChannel: Channel | undefined;
   handleOpenChannel: (option) => void;
+  handleEvent: () => void;
 }
 
 export function ServerAside({
   serverId,
   currentChannel,
   handleOpenChannel,
+  handleEvent,
 }: ServerAsideProps) {
   const [open, setOpen] = useState(false);
   const [visibility, setVisibility] = useState(true);
@@ -36,6 +40,7 @@ export function ServerAside({
 
   const { servers } = useServer();
   const { channels } = useChannel();
+  const { events } = useEvent();
 
   const filteredServers = servers.filter((server) => server._id === serverId);
 
@@ -78,9 +83,12 @@ export function ServerAside({
 
               <div className="flex flex-col gap-2 px-4">
                 <span className="border-[0.1px] border-zinc-600 rounded-full w-full"></span>
-                <button className="flex items-center gap-2 px-2 py-2 hover:bg-[#323338] duration-200 rounded-[4px] hover:text-white text-gray-400 font-semibold">
+                <button
+                  onClick={handleEvent}
+                  className="flex items-center gap-2 px-2 py-2 hover:bg-[#323338] duration-200 rounded-[4px] hover:text-white text-gray-400 font-semibold"
+                >
                   <Calendar className="text-gray-400 h-6 w-6" />
-                  Events
+                  {events.length} Events
                 </button>
                 <span className="border-[0.1px] border-zinc-600 rounded-full w-full"></span>
               </div>
@@ -119,12 +127,22 @@ export function ServerAside({
                           >
                             <Link
                               href={`/home/${channel.server}/${channel._id}`}
-                              className="flex items-center gap-2"
+                              className="flex items-center justify-between gap-2 group"
                             >
-                              <Hash className="text-gray-400 h-5 w-5" />
-                              <span className="font-semibold truncate">
-                                {channel.name}
-                              </span>
+                              <div className="flex items-center gap-2 truncate">
+                                <Hash className="text-gray-400 h-5 w-5" />
+                                <span className="font-semibold truncate">
+                                  {channel.name}
+                                </span>
+                              </div>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                                className="hidden group-hover:block"
+                              >
+                                <Settings />
+                              </button>
                             </Link>
                           </li>
                         );

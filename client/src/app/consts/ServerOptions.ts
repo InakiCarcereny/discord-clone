@@ -1,5 +1,4 @@
 import { Calendar } from "@/app/icons/Calendar";
-import { Folder } from "@/app/icons/Folder";
 import { InviteUser } from "@/app/icons/InviteUser";
 import { PlusBg } from "@/app/icons/PlusBg";
 import { Settings } from "@/app/icons/Settings";
@@ -23,16 +22,11 @@ export const serverOptions = [
   },
   {
     id: 4,
-    label: "Create category",
-    icon: Folder({}),
-  },
-  {
-    id: 5,
     label: "Create event",
     icon: Calendar({}),
   },
   {
-    id: 6,
+    id: 5,
     label: "Leave Server",
     icon: Trash({}),
   },
