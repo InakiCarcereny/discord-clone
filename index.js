@@ -29,7 +29,7 @@ app.use("/auth", userRoutes);
 app.use("/server", serverRoutes);
 app.use("/server", channelRoutes);
 
-app.use("/event", eventRoutes);
+app.use("/server", eventRoutes);
 
 app.use("/info", infoRoutes);
 
